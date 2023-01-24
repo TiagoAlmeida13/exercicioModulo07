@@ -1,11 +1,11 @@
 
 import './App.css';
-import FormExample from './components/form/formulario';
+import Form from './components/form/form';
 
 function App() {
   return (
     <div className="App">
-      <FormExample />
+      <Form />
     </div>
   );
 }

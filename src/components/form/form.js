@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
+import './form.css';
 
-function FormExample() {
-    // Define o estado inicial dos campos de input
+function Form() {
     const [formData, setFormData] = useState({ name: '', email: '', sex: '', documentType: '', documentNumber: '' });
     const [resposta, setResposta] = useState({});
     const [documentTypes, setDocumentTypes] = useState(["RG", "CPF", "CNH"]);
 
-    // Função para atualizar o estado dos campos de input
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    // Função para enviar o formulário
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Verifica se os valores dos campos não estão vazios
+
         if (formData.name !== "" && formData.email !== "" && formData.sex !== "" && formData.documentType !== "" && formData.documentNumber !== "") {
-            // Atualiza a resposta
+
             setResposta(formData);
         }
 
-        // Limpa os campos de input
         setFormData({ name: '', email: '', sex: '', documentType: '', documentNumber: '' });
     }
 
     return (
-        <div>
+        <div class="form">
             <form onSubmit={handleSubmit}>
                 <label>
                     Nome:
@@ -54,21 +53,18 @@ function FormExample() {
                     </select>
                 </label>
                 <br />
-                <label>
-                    Número do documento:
-                    <input type="text" name="documentNumber" value={formData.documentNumber} onChange={handleChange} />
-                </label>
+                <input placeholder='Nº documento' type="number" name="documentNumber" value={formData.documentNumber} onChange={handleChange} />
                 <br />
                 <input type="submit" value="Enviar" />
             </form>
-            <div>
+            <div class="answer">
                 {resposta.name && resposta.email && resposta.sex && resposta.documentType && resposta.documentNumber && (
                     <div>
                         Nome: {resposta.name} <br />
                         Email: {resposta.email} <br />
                         Sexo: {resposta.sex} <br />
                         Tipo de documento: {resposta.documentType} <br />
-                        Número do documento: {resposta.documentNumber}
+                        Nº documento: {resposta.documentNumber}
                     </div>
                 )}
             </div>
@@ -76,4 +72,4 @@ function FormExample() {
     );
 }
 
-export default FormExample;
+export default Form;
