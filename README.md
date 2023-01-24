@@ -1,4 +1,4 @@
-<h1 align="center"> <img alt="layout" title="#layout" src="./assets/images/exemplo.JPG" /> </h1>
+<h1 align="center"> <img alt="layout" title="#layout" src="./src/assets/images/exemplo.JPG" /> </h1>
 
 <h4 align="center"> 
 	🚧 Exercício do Módulo 07 - React do Zero ao Pro da EBAC. 🚧
