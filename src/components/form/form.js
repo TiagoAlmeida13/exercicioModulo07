@@ -6,21 +6,41 @@ function Form() {
     const [formData, setFormData] = useState(initialFormData);
     const [respostas, setRespostas] = useState([]);
     const [documentTypes, setDocumentTypes] = useState(["RG", "CPF", "CNH"]);
+    const [sort, setSort] = useState({ column: 'name', order: 'asc' });
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // check if all required fields are filled
         if (Object.values(formData).every(val => val)) {
-            setRespostas([...respostas, formData]);
+            setRespostas([...respostas, { ...formData, key: respostas.length + 1 }]);
         }
 
         setFormData(initialFormData);
-    }
+    };
+
+    const handleSort = (column) => {
+        if (sort.column === column) {
+            setSort({ column, order: sort.order === 'asc' ? 'desc' : 'asc' });
+        } else {
+            setSort({ column, order: 'asc' });
+        }
+    };
+
+    const handleDelete = (key) => {
+        setRespostas(respostas.filter(r => r.key !== key))
+    };
+
+    const sortedData = respostas.sort((a, b) => {
+        if (sort.order === 'asc') {
+            return a[sort.column] > b[sort.column] ? 1 : -1;
+        } else {
+            return a[sort.column] < b[sort.column] ? 1 : -1;
+        }
+    });
 
     return (
         <div className="form">
@@ -60,21 +80,22 @@ function Form() {
                     <table>
                         <thead>
                             <tr>
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th>Sexo</th>
-                                <th>Tipo de documento</th>
-                                <th>Número de documento</th>
+                                <th onClick={() => handleSort('name')}>Nome</th>
+                                <th onClick={() => handleSort('email')}>Email</th>
+                                <th onClick={() => handleSort('sex')}>Sexo</th>
+                                <th onClick={() => handleSort('documentType')}>Tipo de documento</th>
+                                <th onClick={() => handleSort('documentNumber')}>Número de documento</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {respostas.map((resposta, index) => (
-                                <tr key={index}>
+                            {sortedData.map((resposta, index) => (
+                                <tr key={resposta.key}>
                                     <td>{resposta.name}</td>
                                     <td>{resposta.email}</td>
                                     <td>{resposta.sex}</td>
                                     <td>{resposta.documentType}</td>
                                     <td>{resposta.documentNumber}</td>
+                                    <td><button onClick={() => handleDelete(resposta.key)}>Delete</button></td>
                                 </tr>
                             ))}
                         </tbody>
