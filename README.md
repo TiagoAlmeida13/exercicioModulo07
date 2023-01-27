@@ -1,4 +1,4 @@
-
+<h1 align="center"> <img alt="layout" title="#layout" src="./src/assets/images/exemplo.jpg" /> </h1>
 
 <h4 align="center"> 
 	🚧 Exercício do Módulo 07 - React do Zero ao Pro da EBAC. 🚧
@@ -37,7 +37,7 @@ Um form criado para o exercício do módulo 07 com uso de estados e ciclos de vi
 $ git clone https://github.com/TiagoAlmeida13/exercicioModulo07
 
 # Acesse a pasta do projeto no seu terminal/cmd
-$ cd modulo07
+$ cd exercicioModulo07
 $ npm start
 ```
 
