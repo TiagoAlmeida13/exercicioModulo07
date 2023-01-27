@@ -2,30 +2,28 @@ import React, { useState } from 'react';
 import './form.css';
 
 function Form() {
-    const [formData, setFormData] = useState({ name: '', email: '', sex: '', documentType: '', documentNumber: '' });
-    const [resposta, setResposta] = useState({});
+    const initialFormData = { name: '', email: '', sex: '', documentType: '', documentNumber: '' };
+    const [formData, setFormData] = useState(initialFormData);
+    const [respostas, setRespostas] = useState([]);
     const [documentTypes, setDocumentTypes] = useState(["RG", "CPF", "CNH"]);
-
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
-
-        if (formData.name !== "" && formData.email !== "" && formData.sex !== "" && formData.documentType !== "" && formData.documentNumber !== "") {
-
-            setResposta(formData);
+        // check if all required fields are filled
+        if (Object.values(formData).every(val => val)) {
+            setRespostas([...respostas, formData]);
         }
 
-        setFormData({ name: '', email: '', sex: '', documentType: '', documentNumber: '' });
+        setFormData(initialFormData);
     }
 
     return (
-        <div class="form">
+        <div className="form">
             <form onSubmit={handleSubmit}>
                 <label>
                     Nome:
@@ -48,7 +46,7 @@ function Form() {
                     <select name="documentType" value={formData.documentType} onChange={handleChange}>
                         <option value="">Selecione</option>
                         {documentTypes.map((item, index) => (
-                            <option key={index} value={item}>{item}</option>
+                            <option key={item} value={item}>{item}</option>
                         ))}
                     </select>
                 </label>
@@ -57,15 +55,30 @@ function Form() {
                 <br />
                 <input type="submit" value="Enviar" />
             </form>
-            <div class="answer">
-                {resposta.name && resposta.email && resposta.sex && resposta.documentType && resposta.documentNumber && (
-                    <div>
-                        Nome: {resposta.name} <br />
-                        Email: {resposta.email} <br />
-                        Sexo: {resposta.sex} <br />
-                        Tipo de documento: {resposta.documentType} <br />
-                        Nº documento: {resposta.documentNumber}
-                    </div>
+            <div className="answer">
+                {respostas.length > 0 && (
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Sexo</th>
+                                <th>Tipo de documento</th>
+                                <th>Número de documento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {respostas.map((resposta, index) => (
+                                <tr key={index}>
+                                    <td>{resposta.name}</td>
+                                    <td>{resposta.email}</td>
+                                    <td>{resposta.sex}</td>
+                                    <td>{resposta.documentType}</td>
+                                    <td>{resposta.documentNumber}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 )}
             </div>
         </div>
