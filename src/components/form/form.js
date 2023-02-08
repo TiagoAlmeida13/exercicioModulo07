@@ -92,17 +92,13 @@ function Form() {
                         <thead>
                             <tr>
                                 <th onClick={() => handleSort('name')}>Nome</th>
-                                <th onClick={() => handleSort('email')}>Email</th>
-                                <th onClick={() => handleSort('sex')}>Sexo</th>
-                                <th onClick={() => handleSort('documentType')}>Tipo de documento</th>
-                                <th onClick={() => handleSort('documentNumber')}>Número de documento</th>
                             </tr>
                         </thead>
                         <tbody>
                             {sortedData.map((resposta, index) => (
                                 <tr >
-                                    <td key={resposta.key} onClick={() => handleSelect(resposta)}>{resposta.name}</td>
-
+                                    <td >{resposta.name}</td>
+                                    <td><button key={resposta.key} onClick={() => handleSelect(resposta)}>Mais informações</button></td>
                                     <td><button onClick={() => handleDelete(resposta.key)}>Delete</button></td>
                                 </tr>
                             ))}
