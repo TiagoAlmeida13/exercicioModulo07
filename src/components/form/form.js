@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactModal from 'react-modal';
 import './form.css';
 
 function Form() {
@@ -7,6 +8,15 @@ function Form() {
     const [respostas, setRespostas] = useState([]);
     const [documentTypes, setDocumentTypes] = useState(["RG", "CPF", "CNH"]);
     const [sort, setSort] = useState({ column: 'name', order: 'asc' });
+
+
+    const [selected, setSelected] = useState({});
+    const [showModal, setShowModal] = useState(false);
+
+    const handleSelect = (resposta) => {
+        setSelected(resposta);
+        setShowModal(true);
+    };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -41,6 +51,7 @@ function Form() {
             return a[sort.column] < b[sort.column] ? 1 : -1;
         }
     });
+
 
     return (
         <div className="form">
@@ -89,18 +100,28 @@ function Form() {
                         </thead>
                         <tbody>
                             {sortedData.map((resposta, index) => (
-                                <tr key={resposta.key}>
+                                <tr key={resposta.key} onClick={() => handleSelect(resposta)}>
                                     <td>{resposta.name}</td>
-                                    <td>{resposta.email}</td>
-                                    <td>{resposta.sex}</td>
-                                    <td>{resposta.documentType}</td>
-                                    <td>{resposta.documentNumber}</td>
+
                                     <td><button onClick={() => handleDelete(resposta.key)}>Delete</button></td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+
                 )}
+                <ReactModal
+                    isOpen={showModal}
+                    onRequestClose={() => setShowModal(false)}
+                >
+                    <h2>Informações da resposta</h2>
+                    <p>Nome: {selected.name}</p>
+                    <p>Email: {selected.email}</p>
+                    <p>Sexo: {selected.sex}</p>
+                    <p>Tipo de documento: {selected.documentType}</p>
+                    <p>Número de documento: {selected.documentNumber}</p>
+                    <button onClick={() => setShowModal(false)}>Fechar</button>
+                </ReactModal>
             </div>
         </div>
     );
