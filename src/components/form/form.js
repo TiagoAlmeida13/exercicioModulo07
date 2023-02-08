@@ -100,8 +100,8 @@ function Form() {
                         </thead>
                         <tbody>
                             {sortedData.map((resposta, index) => (
-                                <tr key={resposta.key} onClick={() => handleSelect(resposta)}>
-                                    <td>{resposta.name}</td>
+                                <tr >
+                                    <td key={resposta.key} onClick={() => handleSelect(resposta)}>{resposta.name}</td>
 
                                     <td><button onClick={() => handleDelete(resposta.key)}>Delete</button></td>
                                 </tr>
